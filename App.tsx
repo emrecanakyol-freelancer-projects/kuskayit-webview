@@ -6,21 +6,20 @@ import {
   BackHandler,
 } from 'react-native';
 import {WebView} from 'react-native-webview';
-import SplashScreen from 'react-native-splash-screen';
+import SplashScreen from 'react-native-splash-screen'
+import axios from 'axios';
 
 const App = () => {
   const [refresherEnabled, setEnableRefresher] = useState(true);
   const webViewRef: any = useRef();
   const [canGoBack, setCanGoBack] = useState(false);
-
-  const [apiData, setApiData] = useState('');
-  console.log("apiData", apiData)
+  const [apiData, setApiData] = useState<any>(null);
+  const webviewUrl = apiData?.url
 
   const FetchApiData = async () => {
-    await fetch('https://kuskayit.com/appApi.json')
-      .then(res => res.json())
+    await axios.get('https://kuskayit.com/webApp.json')
       .then(res => {
-        setApiData(res.kuskayit);
+        setApiData(res?.data?.kuskayit);
       });
   };
 
@@ -65,7 +64,7 @@ const App = () => {
           />
         }>
         <WebView
-          source={{uri: 'https://www.kuskayit.com/admin/dist/login.php'}}
+          source={{uri: webviewUrl}}
           onLoadProgress={event => setCanGoBack(event.nativeEvent.canGoBack)}
           ref={webViewRef}
           originWhitelist={['*']}
