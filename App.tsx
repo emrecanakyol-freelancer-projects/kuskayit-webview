@@ -8,6 +8,7 @@ import {
 import {WebView} from 'react-native-webview';
 import SplashScreen from 'react-native-splash-screen'
 import axios from 'axios';
+import { OneSignal } from 'react-native-onesignal';
 
 const App = () => {
   const [refresherEnabled, setEnableRefresher] = useState(true);
@@ -43,6 +44,7 @@ const App = () => {
 
   useEffect(() => {
     FetchApiData();
+    OneSignal.initialize("4d0e5308-d546-4988-b71a-3b162983f8ee");
     SplashScreen.hide();
     BackHandler.addEventListener('hardwareBackPress', handleBack);
     return () => {
